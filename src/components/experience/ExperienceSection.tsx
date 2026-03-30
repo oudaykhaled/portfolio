@@ -43,14 +43,14 @@ export function ExperienceSection() {
                     </div>
                     <div className="text-xs font-mono text-text-dim shrink-0">
                       <span>{exp.period}</span>
-                      <span className="block text-text-dim/60">{exp.location}</span>
+                      <span className="block text-text-dim">{exp.location}</span>
                     </div>
                   </div>
 
                   <ul className="space-y-1.5 mb-4">
                     {exp.highlights.map((h, j) => (
-                      <li key={j} className="text-sm text-text-muted/80 leading-relaxed flex gap-2">
-                        <span className="text-android/60 shrink-0 mt-1">›</span>
+                      <li key={j} className="text-sm text-text-muted leading-relaxed flex gap-2">
+                        <span className="text-android shrink-0 mt-1">›</span>
                         <span>{h}</span>
                       </li>
                     ))}
@@ -61,7 +61,7 @@ export function ExperienceSection() {
                       {exp.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="rounded-full px-2.5 py-0.5 text-[10px] font-mono text-text-dim border border-white/5 bg-white/[0.02]"
+                          className="rounded-full px-2.5 py-0.5 text-xs font-mono text-text-dim border border-white/5 bg-white/[0.02]"
                         >
                           {tech}
                         </span>

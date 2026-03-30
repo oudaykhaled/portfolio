@@ -314,10 +314,9 @@ export const experience: Experience[] = [
 
 export const stats: Stat[] = [
   { label: 'Years Experience', value: 14, suffix: '+' },
-  { label: 'Years Android', value: 10, suffix: '+' },
   { label: 'Companies', value: 7 },
   { label: 'Repositories', value: 211 },
   { label: 'Languages', value: 9 },
   { label: 'Side Projects', value: 18 },
-  { label: 'Payment Success', value: 99.9, suffix: '%' },
+  { label: 'Projects Delivered', value: 100, suffix: '+' },
 ];

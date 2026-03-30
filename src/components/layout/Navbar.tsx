@@ -31,6 +31,7 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
         <a
           href="#"
+          aria-label="Home"
           className="font-mono text-sm font-semibold tracking-tight text-text hover:text-android transition-colors"
         >
           OK<span className="text-android">.</span>dev

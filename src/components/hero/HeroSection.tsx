@@ -43,14 +43,14 @@ export function HeroSection() {
           transition={{ duration: 0.7, delay: 0.5 }}
           className="text-lg sm:text-xl font-mono text-text-muted tracking-wide"
         >
-          Senior / Principal Android Engineer
+          Software Engineer | Consultant
         </motion.p>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.7 }}
-          className="max-w-2xl text-sm sm:text-base text-text-muted/70 leading-relaxed"
+          className="max-w-2xl text-sm sm:text-base text-text-muted leading-relaxed"
         >
           14+ years of software engineering. Deep expertise in native Android &mdash;
           Kotlin, Jetpack Compose, clean architecture. Broad mastery across 9 languages,
@@ -67,25 +67,32 @@ export function HeroSection() {
             href="https://linkedin.com/in/oudaykhaled"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-mono text-text-dim hover:text-android transition-colors"
+            className="text-sm font-mono text-text-dim hover:text-android transition-colors"
           >
             LinkedIn
           </a>
-          <span className="text-text-dim/30">|</span>
+          <span className="text-text-dim" aria-hidden="true">|</span>
           <a
             href="https://github.com/oudaykhaled"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-mono text-text-dim hover:text-android transition-colors"
+            className="text-sm font-mono text-text-dim hover:text-android transition-colors"
           >
             GitHub
           </a>
-          <span className="text-text-dim/30">|</span>
+          <span className="text-text-dim" aria-hidden="true">|</span>
           <a
             href="mailto:ouday.khaled@gmail.com"
-            className="text-xs font-mono text-text-dim hover:text-android transition-colors"
+            className="text-sm font-mono text-text-dim hover:text-android transition-colors"
           >
             ouday.khaled@gmail.com
+          </a>
+          <span className="text-text-dim" aria-hidden="true">|</span>
+          <a
+            href="tel:+31622956715"
+            className="text-sm font-mono text-text-dim hover:text-android transition-colors"
+          >
+            +31 6 22956715
           </a>
         </motion.div>
       </div>

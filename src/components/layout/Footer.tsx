@@ -47,7 +47,7 @@ export function Footer() {
             <Mail size={20} />
           </a>
         </div>
-        <p className="text-xs text-text-dim font-mono">
+        <p className="text-sm text-text-dim font-mono">
           Built with React + Tailwind CSS
         </p>
       </div>

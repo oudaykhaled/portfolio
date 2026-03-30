@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import type { TechnologyDomain } from '../../types';
-import { useEffect } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 interface SkillDetailPanelProps {
   domain: TechnologyDomain | null;
@@ -9,12 +9,50 @@ interface SkillDetailPanelProps {
 }
 
 export function SkillDetailPanel({ domain, onClose }: SkillDetailPanelProps) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      onClose();
+      return;
+    }
+
+    if (e.key === 'Tab' && panelRef.current) {
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }, [onClose]);
+
   useEffect(() => {
     if (!domain) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [domain, onClose]);
+
+    previousFocusRef.current = document.activeElement as HTMLElement;
+    document.addEventListener('keydown', handleKeyDown);
+
+    requestAnimationFrame(() => {
+      closeRef.current?.focus();
+    });
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      previousFocusRef.current?.focus();
+    };
+  }, [domain, handleKeyDown]);
 
   return (
     <AnimatePresence>
@@ -26,20 +64,23 @@ export function SkillDetailPanel({ domain, onClose }: SkillDetailPanelProps) {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
             onClick={onClose}
+            aria-hidden="true"
           />
 
           <motion.div
+            ref={panelRef}
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             role="dialog"
-            aria-label={`${domain.name} skills detail`}
+            aria-modal="true"
+            aria-labelledby="skill-panel-title"
             className="fixed top-0 right-0 z-[70] h-full w-full max-w-lg overflow-y-auto border-l border-white/10 bg-surface p-6 sm:p-8"
           >
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-2xl font-bold" style={{ color: domain.color }}>
+                <h3 id="skill-panel-title" className="text-2xl font-bold" style={{ color: domain.color }}>
                   {domain.name}
                 </h3>
                 <p className="mt-1 text-sm text-text-muted font-mono">
@@ -47,6 +88,7 @@ export function SkillDetailPanel({ domain, onClose }: SkillDetailPanelProps) {
                 </p>
               </div>
               <button
+                ref={closeRef}
                 onClick={onClose}
                 aria-label="Close panel"
                 className="rounded-lg p-2 text-text-muted hover:text-text hover:bg-white/5 transition-colors"
@@ -55,7 +97,7 @@ export function SkillDetailPanel({ domain, onClose }: SkillDetailPanelProps) {
               </button>
             </div>
 
-            <p className="text-sm text-text-muted/80 leading-relaxed mb-6">
+            <p className="text-sm text-text-muted leading-relaxed mb-6">
               {domain.description}
             </p>
 
@@ -107,8 +149,8 @@ export function SkillDetailPanel({ domain, onClose }: SkillDetailPanelProps) {
                       style={{ backgroundColor: domain.color }}
                     />
                   </div>
-                  <p className="text-xs text-text-muted/70 leading-relaxed">{skill.detail}</p>
-                  <span className="mt-1 inline-block text-[10px] text-text-dim font-mono uppercase">
+                  <p className="text-xs text-text-muted leading-relaxed">{skill.detail}</p>
+                  <span className="mt-1 inline-block text-xs text-text-dim font-mono uppercase">
                     {skill.category}
                   </span>
                 </motion.div>

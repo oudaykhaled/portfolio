@@ -73,7 +73,7 @@ export function VerticalStem({ onSelect }: VerticalStemProps) {
                       }}
                     />
                   </div>
-                  <span className="font-mono text-[10px] sm:text-xs text-text-dim w-3 text-right">{skill.rating}</span>
+                  <span className="font-mono text-xs text-text-dim w-3 text-right">{skill.rating}</span>
                 </div>
               </motion.div>
             ))}
